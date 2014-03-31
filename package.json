@@ -1,0 +1,16 @@
+{
+    "name": "application-name",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "3.5.0",
+        "underscore": "1.5.2",
+        "restify": "2.6.1",
+        "sqlite3": "*",
+        "node-gyp" : "*",
+        "serialport": "*"
+    }
+}
