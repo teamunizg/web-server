@@ -26,7 +26,8 @@ var decrypt = function(token) {
 
 module.exports.authenticate = function(req, res, next) {
     var authHeader = req.header('authorization');
-
+    next();
+    /*
     if(authHeader) {
         var substrings = authHeader.split(' ');
 
@@ -57,6 +58,7 @@ module.exports.authenticate = function(req, res, next) {
         responseUnauthorized(res);
         return;
     }
+    */
 };
 
 var responseUnauthorized = function(res) {

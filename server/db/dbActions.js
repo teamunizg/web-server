@@ -8,10 +8,14 @@ if (!exists) {
     exists = true;
 }
 
+var enableLog = 0;
+
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(file);
 
 exports.executeSQL = function (command, onError, onSuccess) {
+    if(enableLog)
+        console.log("dbAction.executeSQL: " + command);
     db.serialize(function () {
         db.run(command, function (err) {
             if (err) {
@@ -29,8 +33,8 @@ exports.executeSQL = function (command, onError, onSuccess) {
 };
 
 exports.executeSQLStatement = function (sqlStatement, data, onSuccess, onError) {
-    console.log("dbAction.executeSQLStatement: " + sqlStatement);
-    console.log(data);
+    if(enableLog)
+        console.log("dbAction.executeSQLStatement: " + sqlStatement);
     db.serialize(function () {
             var stmt = db.prepare(sqlStatement, function (err) {
                 if (err) {
@@ -49,12 +53,12 @@ exports.executeSQLStatement = function (sqlStatement, data, onSuccess, onError) 
                     }
                 }
             }, function (data) {
-                console.log(data);
+                //console.log(data);
             });
 
             stmt.finalize(function () {
                 if (onSuccess) {
-                    onSuccess();
+                    onSuccess(this.lastID);
                 }
             });
         }
@@ -63,7 +67,8 @@ exports.executeSQLStatement = function (sqlStatement, data, onSuccess, onError) 
 };
 
 exports.get = function (sql, onSuccess, onError) {
-    console.log("dbAction.get: " + sql);
+    if(enableLog)
+        console.log("dbAction.get: " + sql);
     db.serialize(function () {
         db.get(sql, function (err, row) {
             if (err) {
@@ -79,7 +84,8 @@ exports.get = function (sql, onSuccess, onError) {
 };
 
 exports.each = function (sql, onSuccess, onError) {
-    console.log("dbAction.each: " + sql);
+    if(enableLog)
+        console.log("dbAction.each: " + sql);
     if (onSuccess) {
         var data = [];
         db.serialize(function () {
@@ -99,6 +105,8 @@ exports.each = function (sql, onSuccess, onError) {
 };
 
 exports.executeBulk = function (sqlStatement, data, onSuccess, onError) {
+    if(enableLog)
+        console.log("dbAction.executeBulk: " + sqlStatement);
     db.serialize(function () {
         db.run("BEGIN");
 
@@ -112,7 +120,7 @@ exports.executeBulk = function (sqlStatement, data, onSuccess, onError) {
         });
 
         for (var i = 0; i < data.length; i++) {
-            stmt.run(data[i], function (err) {
+           stmt.run(data[i], function (err) {
                 if (err) {
                     console.log(err);
                     if (onError) {

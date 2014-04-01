@@ -1,4 +1,5 @@
-var db = require('../db/db.js').database;
+
+var db = require('../../db/dbActions.js').database;
 
 module.exports.findUserByCredentials = function (credentials, onSuccess, onError) {
 

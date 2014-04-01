@@ -4,8 +4,8 @@ var insertOrReplaceNodeSql = "INSERT OR REPLACE INTO Nodes (Address, NodeName, L
 var deleteNodeByAddressSql = "DELETE FROM Nodes WHERE Address = ? ";
 var getAllNodes = "SELECT * FROM Nodes";
 
-exports.bulkInsertOrReplace = function (data, onSuccess, onError) {
-    dbActions.executeBulk(insertOrReplaceNodeSql, data, onSuccess, onError);
+exports.bulkInsertOrReplace = function (nodes, onSuccess, onError) {
+    dbActions.executeBulk(insertOrReplaceNodeSql, nodes, onSuccess, onError);
 };
 
 exports.deleteByAddresses = function (addresses, onSuccess, onError) {

@@ -7,7 +7,7 @@ exports.insertHubStatus = function(status, onSuccess, onError) {
 
     var timestamp = new Date().getTime();
 
-    var data = [status, timestamp];
+    var data = [JSON.stringify(status), timestamp];
 
     dbActions.executeSQLStatement(insertStatusSql, data, onSuccess, onError);
 };

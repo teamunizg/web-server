@@ -4,7 +4,7 @@ var db = dbActions.database;
 var insertMeasurementSql = "INSERT INTO Measurements (Address, BatteryPercentage, Timestamp) VALUES (?, ?, ?)";
 
 exports.insertMeasurement = function (measurement, onSuccess, onError) {
-    dbActions.executeSQL(insertMeasurementSql, measurement, onSuccess, onError);
+    dbActions.executeSQLStatement(insertMeasurementSql, measurement, onSuccess, onError);
 };
 
 exports.getByAddressAndTimestamp = function (address, timestamp, onSuccess, onError) {
